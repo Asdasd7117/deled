@@ -2,17 +2,18 @@ workflows:
   android-build:
     name: Android Build
     environment:
-      android:
-        sdk: 34  # تحديد إصدار Android SDK المطلوب
-      java: 17   # تحديد إصدار Java
+      vars:
+        ANDROID_SDK_ROOT: $HOME/android-sdk
+      java:
+        version: 17
     scripts:
       - name: تثبيت Android SDK
         script: |
-          export ANDROID_HOME=$HOME/android-sdk
+          export ANDROID_HOME=$ANDROID_SDK_ROOT
           export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
           mkdir -p $ANDROID_HOME/cmdline-tools
           cd $ANDROID_HOME/cmdline-tools
-          curl -o sdk-tools.zip https://dl.google.com/android/repository/commandlinetools-mac-9477386_latest.zip
+          curl -o sdk-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
           unzip sdk-tools.zip -d latest
           yes | sdkmanager --licenses
           sdkmanager --install "platform-tools" "platforms;android-34" "build-tools;34.0.0"
