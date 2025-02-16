@@ -3,13 +3,12 @@ workflows:
     name: Build Android APK
     max_build_duration: 60
     environment:
-      flutter: stable
       java: 17
-      android_signing:
-        keystore_path: keystore.keystore
-        keystore_password: $KEYSTORE_PASSWORD
-        key_alias: $KEY_ALIAS
-        key_password: $KEY_PASSWORD
+      vars:
+        KEYSTORE_PATH: keystore.jks
+        KEYSTORE_PASSWORD: $KEYSTORE_PASSWORD
+        KEY_ALIAS: $KEY_ALIAS
+        KEY_PASSWORD: $KEY_PASSWORD
     scripts:
       - name: Build APK
         script: |
