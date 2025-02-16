@@ -4,8 +4,8 @@ workflows:
     environment:
       vars:
         ANDROID_SDK_ROOT: $HOME/android-sdk
-      languages:
-        java: 17
+      java:
+        version: 17
     scripts:
       - name: تثبيت Android SDK
         script: |
