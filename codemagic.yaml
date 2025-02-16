@@ -6,12 +6,16 @@ workflows:
       vars:
         JAVA_VERSION: 17
     scripts:
-      - name: Set up Java
+      - name: تثبيت Android SDK
         script: |
+          yes | sdkmanager --licenses
           sdkmanager --install "cmdline-tools;latest"
+          sdkmanager --install "platform-tools"
           sdkmanager --install "build-tools;34.0.0"
           sdkmanager --install "platforms;android-34"
-      - name: Build APK
+          sdkmanager --install "extras;google;m2repository"
+          sdkmanager --install "extras;android;m2repository"
+      - name: بناء التطبيق
         script: ./gradlew assembleDebug
     artifacts:
       - build/outputs/**/*.apk
