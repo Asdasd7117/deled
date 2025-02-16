@@ -1,23 +1,19 @@
 workflows:
   android-build:
-    name: Android Build
+    name: Build Android APK
+    max_build_duration: 60
     environment:
-      vars:
-        ANDROID_SDK_ROOT: $HOME/android-sdk
-      java:
-        version: 17
+      flutter: stable
+      java: 17
+      android_signing:
+        keystore_path: keystore.keystore
+        keystore_password: $KEYSTORE_PASSWORD
+        key_alias: $KEY_ALIAS
+        key_password: $KEY_PASSWORD
     scripts:
-      - name: تثبيت Android SDK
+      - name: Build APK
         script: |
-          export ANDROID_HOME=$ANDROID_SDK_ROOT
-          export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
-          mkdir -p $ANDROID_HOME/cmdline-tools
-          cd $ANDROID_HOME/cmdline-tools
-          curl -o sdk-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
-          unzip sdk-tools.zip -d latest
-          yes | sdkmanager --licenses
-          sdkmanager --install "platform-tools" "platforms;android-34" "build-tools;34.0.0"
-      - name: بناء التطبيق
-        script: ./gradlew assembleDebug
+          chmod +x gradlew
+          ./gradlew assembleRelease
     artifacts:
-      - build/outputs/**/*.apk
+      - build/app/outputs/flutter-apk/app-release.apk
